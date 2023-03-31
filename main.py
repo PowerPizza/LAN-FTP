@@ -7,7 +7,7 @@ def basic_setup():
         os.mkdir("currentFiles")
 basic_setup()
 
-app = Flask(__name__, template_folder=templates, static_folder=static)
+app = Flask(__name__, template_folder=os.getcwd()+"\\templates", static_folder=os.getcwd()+"\\static")
 
 @app.route("/")
 def home():
