@@ -1,6 +1,12 @@
 from flask import Flask, render_template, request
 import json, os
 
+def basic_setup():
+    total_dir = os.listdir()
+    if "currentFiles" not in total_dir:
+        os.mkdir("currentFiles")
+basic_setup()
+
 app = Flask(__name__)
 
 @app.route("/")
