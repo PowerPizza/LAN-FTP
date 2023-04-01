@@ -35,17 +35,31 @@ function upload_file(){
         let xml_svr = new XMLHttpRequest();
         xml_svr.open("POST", "/createFile");
         xml_svr.onload = ()=>{
-            let xml_svr2 = new XMLHttpRequest();
-            xml_svr2.open("POST", "/writeFile");
-            xml_svr2.onload = ()=>{
-                if (xml_svr2.responseText != "OK"){
-                    alert("Failed");
+            let i = 0;
+            let chunk_size = 10000000;
+            // Math.round(file_.size/50)+1
+            function startWriter(){
+                let xml_svr2 = new XMLHttpRequest();
+                xml_svr2.open("POST", "/writeFile");
+                xml_svr2.onload = ()=>{
+                    if (xml_svr2.responseText != "OK"){
+                        alert("Failed");
+                        return;
+                    }
+                    else if (xml_svr2.responseText == "OK" && i >= file_.size){
+                        load_downloadables();
+                        document.querySelector("#upload_btn #percent").innerHTML = ``;
+                        document.getElementById("upload_btn").className = "no_anim";
+                        document.getElementById("upload_btn").disabled = false;
+                        return;
+                    }
+                    i += chunk_size;
+                    document.querySelector("#upload_btn #percent").innerHTML = `ED ${Math.round(i/file_.size*100)}%`;
+                    startWriter();
                 }
-                load_downloadables();
-                document.getElementById("upload_btn").className = "no_anim";
-                document.getElementById("upload_btn").disabled = false;
+                xml_svr2.send(file_.slice(i, i+chunk_size));
             }
-            xml_svr2.send(file_);
+            startWriter();
         }
         xml_svr.send(JSON.stringify(file_meta_data_));
 

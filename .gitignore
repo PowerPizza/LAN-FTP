@@ -1,2 +1,4 @@
 .idea/
 currentFiles/
+test/
+__pycache__/

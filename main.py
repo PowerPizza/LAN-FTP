@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import json, os
 
 def basic_setup():
@@ -8,32 +8,31 @@ def basic_setup():
 basic_setup()
 
 app = Flask(__name__, template_folder=os.getcwd()+"\\templates", static_folder=os.getcwd()+"\\static")
+app.secret_key = "222SKK3JNNSOX0"
 
 @app.route("/")
 def home():
+    session["writeIN"] = None
     return render_template("index.html")
 
-writeIN = None
 @app.route("/createFile", methods=["POST"])
 def createFile():
-    global writeIN
     meta_data_ = json.loads(request.data.decode())
     with open(f"currentFiles/{meta_data_['name']}", "wb") as fp:
         fp.close()
-    writeIN = meta_data_['name']
+    session["writeIN"] = meta_data_['name']
     return "OK"
 
 @app.route("/writeFile", methods=["POST"])
 def writeFile():
-    global writeIN
-    with open(f"currentFiles/{writeIN}", "wb") as fp:
+    with open(f"currentFiles/{session['writeIN']}", "ab") as fp:
         fp.write(request.data)
-    writeIN = None
     return "OK"
 
 
 @app.route("/listDownloadable", methods=["POST"])
 def list_Downloadable():
+    session["writeIN"] = None
     to_ret = {"files": os.listdir("currentFiles/")}
     return json.dumps(to_ret)
 
