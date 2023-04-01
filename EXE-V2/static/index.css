@@ -1,0 +1,41 @@
+.can_download{
+    width: 100%;
+    border: 1px solid black;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 200px;
+}
+
+.can_download #downloadables{
+    width: 100%;
+    font-size: 16px;
+    border: 2px solid rgb(29, 29, 29);
+    outline: none;
+    cursor: pointer;
+}
+
+.can_download .options{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.can_download .options button{
+    border: 5px outset green;
+    font-size: 18px;
+
+}
+.can_download .options button:active{
+    border: 5px inset green;
+}
+
+@keyframes textAnimdotdot {
+    0% {content: ".";}
+    20% {content: "..";}
+    40% {content: "...";}
+    60% {content: "....";}
+    80% {content: ".....";}
+    100%{content: "......";}
+}
+.yes_anim:after{
+    content: "";
+    animation: textAnimdotdot 2s infinite;
+}
