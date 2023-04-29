@@ -4,7 +4,7 @@ This program help us to transfer file from on device to other devices.
 
 __How To Use On Windows OS__
 -
-- open EXE folder of project.
+- download the exe of project [Download ExE](https://drive.google.com/drive/folders/1kKm-3lEqjP2q8z-2lFdiZLZcIAO7YplZ?usp=sharing)
 - execute the provided exe file. [Do not delete any file folder present in exe folder.]
 - A cmd window will open as you run the exe.
 - You will get the IP printed on that cmd window just put that ip in any web browser to visit webserver.
